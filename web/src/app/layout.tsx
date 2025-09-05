@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { CartProvider } from "../context/CartContext";
+import CartSummary from "../components/CartSummary";
+import Footer from "../components/Footer";
 
 import ReduxProvider from "@/store/redux-provider";
 
@@ -29,7 +32,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ReduxProvider>{children}</ReduxProvider>
+        <CartProvider>
+          <header className="w-full flex items-center justify-between px-6 py-4 border-b bg-slate-100 shadow-sm fixed top-0 left-0 z-50">
+            <h1 className="text-xl font-bold">Product Catalog</h1>
+            <CartSummary />
+          </header>
+          <div className="pt-[72px] pb-[72px] h-screen overflow-y-auto">
+            <ReduxProvider>{children}</ReduxProvider>
+          </div>
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );
